@@ -1,10 +1,54 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Todo main</title>
-</head>
-<body>
-    <h1>Hello Todo</h1>
-</body>
-</html>
+{% extends 'base.html' %}
+
+{% block content %}
+    <style>
+        .main_head {
+            text-align: center;
+            margin: 20px;
+        }
+
+        .input-group {
+            margin-top: -1px;
+            height: 3rem;
+        }
+
+        .input-group > .form-control {
+            padding-top: 0;
+            height: 3rem;
+            line-height: 3rem;
+            font-size: 1.1rem;
+        }
+
+        .input-group-prepend {
+        }
+
+        .plus {
+            width: 13px;
+            font-weight: bolder;
+            font-size: 1.3rem;
+        }
+
+    </style>
+    <h1 class="main_head display-1">Todo List</h1>
+    <form action="">
+
+        {% for todo in todos %}
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <div class="input-group-text">
+                        <input type="checkbox" aria-label="Checkbox for following text input">
+                    </div>
+                </div>
+                <div class="form-control">{{ todo.title }}</div>
+            </div>
+        {% endfor %}
+        <div class="input-group">
+            <div class="input-group-prepend btn-outline-primary">
+                <div class="input-group-text btn-outline-primary">
+                    <div class="plus">+</div>
+                </div>
+            </div>
+            <input type="text" class="form-control" aria-label="Text input with checkbox">
+        </div>
+    </form>
+{% endblock %}
