@@ -14,6 +14,7 @@
 
         .input-group > .form-control {
             padding-top: 0;
+            padding-bottom: 0;
             height: 3rem;
             line-height: 3rem;
             font-size: 1.1rem;
@@ -23,32 +24,42 @@
         }
 
         .plus {
+            padding-top: 0;
+            padding-bottom: 0;
+        }
+
+        .plus > div {
             width: 13px;
+            height: 1.3rem;
+            line-height: 1.3rem;
             font-weight: bolder;
             font-size: 1.3rem;
+            color: beige;
         }
 
     </style>
     <h1 class="main_head display-1">Todo List</h1>
-    <form action="">
+    <form action="{% url "Todo:update" %}" method="POST">
+        {% csrf_token %}
 
         {% for todo in todos %}
             <div class="input-group">
                 <div class="input-group-prepend">
                     <div class="input-group-text">
                         <input type="checkbox" aria-label="Checkbox for following text input">
+                        {#                        onchange="{% url "Todo:update" todo.id %}"#}
                     </div>
                 </div>
                 <div class="form-control">{{ todo.title }}</div>
             </div>
         {% endfor %}
         <div class="input-group">
-            <div class="input-group-prepend btn-outline-primary">
-                <div class="input-group-text btn-outline-primary">
-                    <div class="plus">+</div>
+            <div class="input-group-prepend">
+                <div class="input-group-text plus" style="background-color: #007BFF">
+                    <div>+</div>
                 </div>
             </div>
-            <input type="text" class="form-control" aria-label="Text input with checkbox">
+            <input type="text" class="form-control" aria-label="Text input with checkbox" name="title">
         </div>
     </form>
 {% endblock %}
