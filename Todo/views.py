@@ -12,10 +12,19 @@ def main(request):
 
 
 @require_POST
-def update(request):
+def create(request):
     form = TodoForm(request.POST)
 
     if form.is_valid():
         form.save()
+
+    return redirect("Todo:main")
+
+
+def update(request):
+    todo = Todo.objects.get(id=request.POST["id"])
+
+    todo.checked ^= True
+    todo.save()
 
     return redirect("Todo:main")

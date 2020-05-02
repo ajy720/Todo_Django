@@ -39,27 +39,44 @@
 
     </style>
     <h1 class="main_head display-1">Todo List</h1>
-    <form action="{% url "Todo:update" %}" method="POST">
-        {% csrf_token %}
 
-        {% for todo in todos %}
-            <div class="input-group">
-                <div class="input-group-prepend">
-                    <div class="input-group-text">
-                        <input type="checkbox" aria-label="Checkbox for following text input">
-                        {#                        onchange="{% url "Todo:update" todo.id %}"#}
-                    </div>
+    {% for todo in todos %}
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <div class="input-group-text">
+                    <input
+                            type="checkbox"
+                            aria-label="Checkbox for following text input"
+                            onclick=check({{ todo.id }})
+                            {% if todo.checked %} checked {% endif %}
+                    >
                 </div>
-                <div class="form-control">{{ todo.title }}</div>
             </div>
-        {% endfor %}
+            <div class="form-control">{{ todo.title }}</div>
+        </div>
+    {% endfor %}
+    <form action="{% url "Todo:create" %}" method="POST">
+        {% csrf_token %}
         <div class="input-group">
             <div class="input-group-prepend">
                 <div class="input-group-text plus" style="background-color: #007BFF">
                     <div>+</div>
                 </div>
             </div>
-            <input type="text" class="form-control" aria-label="Text input with checkbox" name="title">
+            <input type="text" class="form-control" aria-label="Text input with checkbox" name="title" autofocus>
         </div>
     </form>
+
+    <script>
+        function check(todo_id) {
+            $.ajax({
+                type: "POST",
+                url: "{% url "Todo:update" %}",
+                data: {
+                    "id": todo_id,
+                    'csrfmiddlewaretoken': '{{ csrf_token }}'
+                }
+            })
+        }
+    </script>
 {% endblock %}

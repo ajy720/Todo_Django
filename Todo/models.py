@@ -4,6 +4,9 @@ from django.db import models
 
 
 class Todo(models.Model):
+    class Meta:
+        ordering = ["checked", "created_at", "-complete_at"]
+
     title = models.CharField(max_length=50, verbose_name="제목")
     checked = models.BooleanField(verbose_name="완료 여부")
 
