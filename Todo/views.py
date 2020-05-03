@@ -22,10 +22,20 @@ def create(request):
 
 
 @require_POST
-def update(request):
+def check(request):
     todo = Todo.objects.get(id=request.POST.get("id"))
 
     todo.checked ^= True
+    todo.save()
+
+    return redirect("Todo:main")
+
+
+@require_POST
+def update(request):
+    todo = Todo.objects.get(id=request.POST.get("id"))
+
+    todo.title = request.POST.get("title")
     todo.save()
 
     return redirect("Todo:main")

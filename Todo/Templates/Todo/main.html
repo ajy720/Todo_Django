@@ -66,9 +66,9 @@
                     >
                 </div>
             </div>
-            <div class="form-control">{{ todo.title }}</div>
+            <input class="form-control" value="{{ todo.title }}" onchange="update({{ todo.id }}, this.value)" />
             <div id={{ todo.id }} class="btn-outline-danger del_btn btn
-            " >X
+            ">X
         </div>
         </div>
     {% endfor %}
@@ -92,10 +92,23 @@
     </form>
 
     <script>
-        function check(todo_id) {
+        function update(todo_id, title) {
+            console.log(title)
             $.ajax({
                 type: "POST",
                 url: "{% url "Todo:update" %}",
+                data: {
+                    "id": todo_id,
+                    "title": title,
+                    'csrfmiddlewaretoken': '{{ csrf_token }}'
+                }
+            })
+        }
+
+        function check(todo_id, title) {
+            $.ajax({
+                type: "POST",
+                url: "{% url "Todo:check" %}",
                 data: {
                     "id": todo_id,
                     'csrfmiddlewaretoken': '{{ csrf_token }}'
