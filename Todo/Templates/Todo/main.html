@@ -10,6 +10,8 @@
         .input-group {
             margin-top: -1px;
             height: 3rem;
+            display: flex;
+            align-items: center;
         }
 
         .input-group > .form-control {
@@ -21,6 +23,7 @@
         }
 
         .input-group-prepend {
+            height: 3rem;
         }
 
         .plus {
@@ -36,6 +39,17 @@
             font-size: 1.3rem;
             color: beige;
         }
+
+        .del_btn {
+            position: absolute;
+            right: 1rem;
+            display: none;
+        }
+
+        .input-group:hover .del_btn {
+            display: block;
+        }
+
 
     </style>
     <h1 class="main_head display-1">Todo List</h1>
@@ -53,6 +67,9 @@
                 </div>
             </div>
             <div class="form-control">{{ todo.title }}</div>
+            <div id={{ todo.id }} class="btn-outline-danger del_btn btn
+            " >X
+        </div>
         </div>
     {% endfor %}
     <form action="{% url "Todo:create" %}" method="POST">
@@ -63,7 +80,14 @@
                     <div>+</div>
                 </div>
             </div>
-            <input type="text" class="form-control" aria-label="Text input with checkbox" name="title" autofocus>
+            <input
+                    type="text"
+                    class="form-control"
+                    aria-label="Text input with checkbox"
+                    name="title"
+                    autofocus
+                    placeholder="항목을 추가하세요."
+            >
         </div>
     </form>
 
@@ -78,5 +102,22 @@
                 }
             })
         }
+
+        $(".del_btn").click(function () {
+            var todo = $(this).parents(".input-group")
+            $.ajax({
+                type: "POST",
+                url: "{% url "Todo:delete" %}",
+                data: {
+                    "id": $(this).attr("id"),
+                    'csrfmiddlewaretoken': '{{ csrf_token }}'
+                },
+                success: function (response) {
+                    todo.remove()
+                }
+            })
+
+
+        })
     </script>
 {% endblock %}

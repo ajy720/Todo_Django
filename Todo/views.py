@@ -21,10 +21,19 @@ def create(request):
     return redirect("Todo:main")
 
 
+@require_POST
 def update(request):
-    todo = Todo.objects.get(id=request.POST["id"])
+    todo = Todo.objects.get(id=request.POST.get("id"))
 
     todo.checked ^= True
     todo.save()
 
+    return redirect("Todo:main")
+
+
+@require_POST
+def delete(request):
+    todo = Todo.objects.get(id=request.POST.get("id"))
+
+    todo.delete()
     return redirect("Todo:main")
