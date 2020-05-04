@@ -25,7 +25,9 @@ SECRET_KEY = 'x+0l^h4x*7(j(hx%lf-vm1z($%t@8(!79stqrv!e7adl5kjrk1'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    # 여기다가 호스팅 하는 곳 도메인 작성
+]
 
 
 # Application definition
@@ -106,7 +108,8 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'ko-kr'
 
-TIME_ZONE = 'Asia/seoul'
+USE_TZ = True
+TIME_ZONE = 'Asia/Seoul'
 
 USE_I18N = True
 

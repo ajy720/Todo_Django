@@ -14,4 +14,8 @@
 - [ ] 메모
 
 ### Todo의 Todo
-- [ ] django로 만든 웹 배포하기
+- [x] django로 만든 웹 배포하기
+  - [x] [PythonAnywhere](http://ajy720.pythonanywhere.com)
+  - [ ] AWS
+  - [ ] Heroku
+  - etc.
